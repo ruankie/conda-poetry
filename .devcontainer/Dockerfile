@@ -1,0 +1,38 @@
+# Args
+ARG CONDA_VER=4.12.0
+
+# Base image
+FROM --platform=linux/amd64 continuumio/miniconda3:${CONDA_VER}
+
+# Switch to root
+USER root:root
+
+# Install common dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    build-essential \
+    git \
+    wget && \
+    curl && \
+    apt-get clean -y && \
+    rm -rf /var/lib/apt/lists/*
+
+# Set working dir and copy all files to container
+WORKDIR /app
+COPY . .
+
+# Create conda env with dependencies
+RUN conda env create -f /app/conda_env.yml
+
+# Activate conda env and restart shell
+RUN conda init bash
+RUN echo "conda activate py376" >> ~/.bashrc
+# RUN exec bash
+
+# Install poetry in conda env
+ENV POETRY_VERSION=1.1.13
+RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+ENV PATH="${PATH}:/root/.poetry/bin"
+
+# Install packages specified by poetry into conda env
+# RUN poetry install
