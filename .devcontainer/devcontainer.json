@@ -7,7 +7,7 @@
 
 	// Set *default* container specific settings.json values on container create.
 	"settings": { 
-		"python.defaultInterpreterPath": "/opt/conda/envs/py375/bin/python"
+		"python.defaultInterpreterPath": "/opt/conda/envs/py376/bin/python"
 	},
 
 	// Add the IDs of extensions you want installed when the container is created.

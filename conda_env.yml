@@ -2,7 +2,6 @@ name: py376
 
 channels:
   - default
-  - conda-forge
   
 dependencies:
   - python=3.7.6

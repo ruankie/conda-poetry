@@ -12,7 +12,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     build-essential \
     git \
-    wget && \
+    wget \
     curl && \
     apt-get clean -y && \
     rm -rf /var/lib/apt/lists/*
@@ -24,15 +24,14 @@ COPY . .
 # Create conda env with dependencies
 RUN conda env create -f /app/conda_env.yml
 
-# Activate conda env and restart shell
-RUN conda init bash
-RUN echo "conda activate py376" >> ~/.bashrc
-# RUN exec bash
-
-# Install poetry in conda env
+# Install poetry
 ENV POETRY_VERSION=1.1.13
 RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
 ENV PATH="${PATH}:/root/.poetry/bin"
 
 # Install packages specified by poetry into conda env
-# RUN poetry install
+RUN conda run -n py376 poetry install
+
+# Ensure new shells are opened inside the conda env
+# RUN conda init bash
+RUN echo "conda activate py376" >> ~/.bashrc
