@@ -9,11 +9,11 @@ services:
       dockerfile: .devcontainer/Dockerfile
     volumes:
      - type : bind
-       source: ./
+       source: ../
        target: /app/
     hostname:
         docker-conda-poetry
     ports:
       - "8889:8889"
-    command: conda run -n py376 --no-capture-output jupyter lab --ip="0.0.0.0" --port=8889 --no-browser --allow-root
+    command: jupyter lab --ip="0.0.0.0" --port=8889 --no-browser --allow-root
     container_name: docker-conda-poetry

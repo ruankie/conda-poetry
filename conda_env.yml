@@ -1,7 +1,0 @@
-name: py376
-
-channels:
-  - default
-  
-dependencies:
-  - python=3.7.6
